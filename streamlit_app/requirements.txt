@@ -1,0 +1,17 @@
+# Dependencias para scripts de ingesta y acceso a AWS
+boto3>=1.34.0
+pymysql>=1.1.0
+requests>=2.31.0
+
+# Dependencias para la aplicación Streamlit y procesamiento de datos
+streamlit>=1.28.0
+pandas>=2.0.0
+plotly>=5.17.0
+matplotlib>=3.7.0
+
+# Para leer/escribir directamente desde S3 con pandas
+s3fs>=2023.12.0
+pyarrow>=14.0.0
+
+# (Opcional) Para compatibilidad con notebooks de Spark fuera de AWS
+# pyspark>=3.4.0
