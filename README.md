@@ -94,6 +94,29 @@ python scripts/obtener_tmdb.py
 aws s3 cp gdp_data.json s3://mariaolayalab1/Raw/ec2/gdp_data.json
 ```
 
+Para que la ingesta se ejecute de forma periódica (por ejemplo, todos los días a las 2:00 AM), puedes usar el script `cron.py` incluido en el repositorio. Este script realiza **todos los pasos anteriores** y está preparado para ser programado con `crontab`.
+
+**Instrucciones:**
+
+1. Asegúrate de que el script tenga permisos de ejecución:
+   ```bash
+   chmod +x cron.py
+   ```
+
+2. **Prueba manual** antes de programar (verás los logs en pantalla):
+   ```bash
+   python3 cron.py
+   ```
+
+3. **Programa la tarea** con crontab:
+   ```bash
+   crontab -e
+   ```
+   Agrega la siguiente línea para que se ejecute diariamente a las 2:00 AM:
+   ```
+   0 2 * * * cd /home/ubuntu && source venv/bin/activate && python3 cron.py >> /var/log/ingesta.log 2>&1
+   ```
+
 ##  Procesamiento ETL con AWS Glue
 
 1. En la consola de AWS Glue, crear un nuevo job ETL (script editor).
