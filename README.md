@@ -153,6 +153,6 @@ Accede a la app en: `http://<IP_EC2>:8501`
 - El certificado SSL `global-bundle.pem` es necesario para conectar a RDS desde el script Python.
 
 ##  Autores
-- Sofía Acosta – [sacostap](mailto:sacostap@eafit.edu.co)
-- Isabela Acosta – [isabela@eafit.edu.co](mailto:isabela@eafit.edu.co)
-- María Olaya – [molaya@eafit.edu.co](mailto:molaya@eafit.edu.co)
+- Sofía Acosta – [iacostap@eafit.edu.co](mailto:iacostap@eafit.edu.co)
+- Isabela Acosta – [sacostap@eafit.edu.co](mailto:sacostap@eafit.edu.co)
+- María Olaya – [mmolayal@eafit.edu.co](mailto:mmolayal@eafit.edu.co)

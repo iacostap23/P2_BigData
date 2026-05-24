@@ -1,4 +1,3 @@
-
 import requests
 import csv
 import json
@@ -7,7 +6,7 @@ import boto3
 
 API_KEY = "044279c983d25fc0b7d831603f31dded"
 BUCKET = "mariaolayalab1"
-S3_KEY = "Raw/url/tmdb_metadata.json"   # o "Raw/api/tmdb_metadata.json" si prefieres
+S3_KEY = "Raw/url/tmdb_metadata.json"
 
 # Leer links.csv para obtener tmdbId
 tmdb_ids = []
@@ -29,15 +28,22 @@ for i, tmdb_id in enumerate(tmdb_ids):
         resp = requests.get(url, timeout=10)
         if resp.status_code == 200:
             data = resp.json()
+            # Extraer país de producción
+            production_countries = data.get('production_countries', [])
+            country_iso = production_countries[0].get('iso_3166_1') if production_countries else None
+            country_name = production_countries[0].get('name') if production_countries else None
+
             metadatos.append({
                 'tmdbId': tmdb_id,
                 'title': data.get('title'),
                 'budget': data.get('budget', 0),
                 'revenue': data.get('revenue', 0),
                 'vote_average': data.get('vote_average', 0),
-                'release_date': data.get('release_date', '')
+                'release_date': data.get('release_date', ''),
+                'production_country_iso': country_iso,
+                'production_country_name': country_name
             })
-            print(f"[{i+1}/{len(tmdb_ids)}] OK: {data.get('title')}")
+            print(f"[{i+1}/{len(tmdb_ids)}] OK: {data.get('title')} - País: {country_name}")
         else:
             print(f"Error {resp.status_code} para {tmdb_id}")
     except Exception as e:
@@ -45,8 +51,8 @@ for i, tmdb_id in enumerate(tmdb_ids):
     time.sleep(0.05)
 
 # Guardar localmente
-with open('tmdb_metadata.json', 'w') as out:
-    json.dump(metadatos, out, indent=2)
+with open('tmdb_metadata.json', 'w', encoding='utf-8') as out:
+    json.dump(metadatos, out, indent=2, ensure_ascii=False)
 print(f"Archivo local guardado con {len(metadatos)} películas.")
 
 # Subir a S3
